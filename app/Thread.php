@@ -1,0 +1,66 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use App\Filters\ThreadFilters;
+use App\RecordsActivity;
+
+class Thread extends Model
+{
+
+    use RecordsActivity;
+
+    protected $guarded = [];
+    protected $with = ['creator', 'chanel'];// with relationship return json property
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function($builder){
+
+            $builder->withCount('replies');//when dd $thread it will exmpl return property replies_count:2
+        });
+        static::deleting(function ($thread){
+
+            $thread->replies->each(function ($reply){
+
+                $reply->delete();
+            });
+        });
+
+    }
+    
+    public function path(){
+
+    	return "/threads/{$this->chanel->slug}/{$this->id}";
+    }
+
+    public function replies()
+    {
+    	return $this->hasMany(Replay::class);// if we want all favorites to fetch ->withCount('favorites')
+    }
+    public function getReplyCountAttribute()
+    {
+        return $this->replies()->count();// count all replies for thread
+    }
+
+    public function creator()
+    {
+    	return $this->belongsTo(User::class, 'user_id');//jer gleda creator_id
+    }
+
+    public function addReplay($replay)
+    {
+        $this->replies()->create($replay);
+    }
+    public function chanel()
+    {
+        return $this->belongsTo(Chanel::class);
+    }
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
+}

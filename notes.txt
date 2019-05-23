@@ -1,0 +1,39 @@
+#Forum
+
+1.Thread	
+2.Repay
+3.User
+
+a.Thread is created by user
+b.A replay belongs to thread, user.
+
+php artisan make:model Thread -mr // model migration and resource controller
+
+ //Pravi thread za usere dinamicki 
+ $threads = factory('App\Thread')->create();	
+
+
+ // pravi za svaki thread reply ali mora $threads variabla kada se tinkeruje factory za Thread 
+$threads->each(function ($thread) {factory('App\Replay', 7)->create(['thread_id' => $thread->id]); }); 
+
+// za laravel debugger
+
+ - composer require barryvdh/laravel-debugbar
+ - add this to AppServiceProvider register method
+	
+   code  if ($this->app->isLocal()) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
+// End of laravel debugger
+
+
+// Override default key name
+
+ - example we want route model binding for /profiles/Uros not /profiles/1
+
+  //Example for Chanel
+  
+// public function getRouteKeyName()
+    {
+    	return 'slug'; // this method override the method in parent class to not autogenerate
+    }
