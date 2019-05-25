@@ -39,9 +39,10 @@ class ParticipateInForumTest extends TestCase
         //When user adds replay to thread
         $replay = factory('App\Replay')->make();// we want to make in memory not create on db
         $this->post($thread->path().'/replies' ,$replay->toArray());
-        //Then repaly should be visible on the page.
-        $this->get($thread->path())
-                ->assertSee($replay->body); 
+        //Then repaly should be saved in DB.
+        $this->assertDatabaseHas('replays', ["body" => $replay->body]);
+
+        $this->assertEquals(1, $thread->fresh()->replies_count);
     }
     /**
      * A basic feature test example.
@@ -97,6 +98,8 @@ class ParticipateInForumTest extends TestCase
             $this->delete("/replies/{$replay->id}")->assertStatus(302);
 
             $this->assertDatabaseMissing('replays', ['id' => $replay->id]);
+
+            $this->assertEquals(0, $replay->thread->fresh()->replies_count); 
         }
             /**
      * A basic feature test example.

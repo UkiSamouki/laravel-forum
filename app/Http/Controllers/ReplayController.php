@@ -11,19 +11,27 @@ class ReplayController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('auth');	
+		$this->middleware('auth', ['except' => 'index']);	
 	}
 	
+    public function index($channelId, Thread $thread)
+    {
+        return $thread->replies()->paginate(10);
+    }
+
     public function store($chanelId ,Thread $thread){
 
-        $this->validate(request(), [
-            'body' => 'required'
-        ]);
+        $this->validate(request(), ['body' => 'required']);
 
-    	$thread->addReplay([
+    	$replay = $thread->addReplay([
     		'body' => request('body'),
     		'user_id' => auth()->id()
     	]);
+
+        if (request()->expectsJson()) {
+            
+            return $replay->load('owner');
+        }
 
     	return back()->with('flash', 'Your reply has been created');
     }

@@ -18,10 +18,6 @@ class Thread extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('replyCount', function($builder){
-
-            $builder->withCount('replies');//when dd $thread it will exmpl return property replies_count:2
-        });
         static::deleting(function ($thread){
 
             $thread->replies->each(function ($reply){
@@ -53,7 +49,7 @@ class Thread extends Model
 
     public function addReplay($replay)
     {
-        $this->replies()->create($replay);
+        return $this->replies()->create($replay);
     }
     public function chanel()
     {
@@ -63,4 +59,5 @@ class Thread extends Model
     {
         return $filters->apply($query);
     }
+    
 }

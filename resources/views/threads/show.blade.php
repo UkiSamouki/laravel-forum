@@ -31,20 +31,8 @@
             </div>
           </div>
           
-            <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
-          
-            {{ $replies->links() }}
-          @if (auth()->check())
-          <form method="POST" action="{{ $thread->id."/replies" }}" style="padding-top: 30px;">
-            @csrf
-              <div class="form-group">
-                
-                <textarea name="body" id="body" class="form-control" placeholder="Have somthing to say?" rows="5">
-                  
-                </textarea>
-              </div>
+            <replies  @added="repliesCount++" @removed="repliesCount--"></replies>
 
-              <button type="submit" class="btn btn-primary">Post</button>
          </div>
 
         <div class="col-md-4">
@@ -66,16 +54,6 @@
 
 
         </div>
-    
-
-          </form>
-    @else
-
-    <p class="text-center" style="padding-top: 20px;">Please 
-      <a href="{{ route('login') }}">sign in</a>
-     to participate in this discussion</p>
-
-            @endif
           </div>
       </div>
     </div>

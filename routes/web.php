@@ -23,12 +23,14 @@ Route::get('/threads/create', 'ThreadController@create');
 Route::post('/threads', 'ThreadController@store'); 
 Route::get('/threads/{chanel}/{thread}', 'ThreadController@show');
 Route::delete('/threads/{chanel}/{thread}', 'ThreadController@destroy');
-//Route::resource('/threads', 'ThreadController');
 Route::get('/threads/{chanel}', 'ThreadController@index'); 
+//Route::resource('/threads', 'ThreadController');
+Route::get('/threads/{chanel}/{thread}/replies', 'ReplayController@index'); 
 Route::post('/threads/{chanel}/{thread}/replies', 'ReplayController@store'); 
 
 Route::delete('/replies/{replay}', 'ReplayController@destroy');
 Route::patch('/replies/{replay}', 'ReplayController@update');
+
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 
 Route::post('/replies/{replay}/favorites', 'FavoritesController@store');

@@ -16,6 +16,21 @@ class Replay extends Model
     protected $appends = ['favoritesCount', 'isFavorited']; // send a count of relation of that instance
 
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($replay){
+
+            $replay->thread->increment('replies_count');
+        });
+
+        static::deleted(function ($replay){
+
+            $replay->thread->decrement('replies_count');
+        });
+    }
+
     public function owner()
     {
     	return $this->belongsTo(User::class, 'user_id'); // foreign key is user_id not owner_id

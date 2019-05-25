@@ -68,7 +68,7 @@ class ActivityTest extends TestCase
      * @test 
      */
 
-	public function it_records_activity_when_a_reply_is_created()
+	public function it_records_activity_when_a_replay_is_created()
 	{
 
 		$this->signIn();
