@@ -5,9 +5,13 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ThreadTest extends TestCase
 {
+
+
+    use DatabaseMigrations;
 
 	protected $thread;
 
@@ -70,6 +74,41 @@ class ThreadTest extends TestCase
         $thread = factory('App\Thread')->create();
 
         $this->assertInstanceOf('App\Chanel', $thread->chanel);
+    }
+
+    /**
+     * A basic unit test example.
+     *
+     * @test 
+     */
+    public function a_thread_can_be_subscribe_to()
+    {
+
+        $thread = create('App\Thread');
+
+        // User subscribe to the thread
+        $thread->subscribe($userId = 1);
+        // Fetch all threads that user has subscribed
+        $this->assertEquals(1, $thread->subscriptions()->where('user_id', $userId)->count());
+    }
+
+    /**
+     * A basic unit test example.
+     *
+     * @test 
+     */
+    public function a_thread_can_be_unsubscribe_from()
+    {
+
+        $thread = create('App\Thread');
+
+        // User subscribe to the thread
+        $thread->subscribe($userId = 1);
+
+        $thread->unsubscribe($userId = 1);
+
+        // Fetch all threads that user has subscribed
+        $this->assertCount(0, $thread->subscriptions);
     }
 
 }

@@ -97,6 +97,6 @@ class ThreadsTest extends TestCase
         $thread = create('App\Thread')->fresh();
         $replay = create('App\Replay', ['thread_id' => $thread->id]);
         $response = $this->getJson('/threads?unanswered=1')->json();
-        $this->assertCount(7, $response);
+        $this->assertCount(1, $response);
     }
 }
