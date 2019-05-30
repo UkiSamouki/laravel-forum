@@ -406,6 +406,7 @@ class ComposerStaticInit293406e2364a08ab2179fe7b824588bd
         'App\\Http\\Controllers\\ProfilesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfilesController.php',
         'App\\Http\\Controllers\\ReplayController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReplayController.php',
         'App\\Http\\Controllers\\ThreadController' => __DIR__ . '/../..' . '/app/Http/Controllers/ThreadController.php',
+        'App\\Http\\Controllers\\ThreadSubscriptionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ThreadSubscriptionsController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',

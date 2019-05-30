@@ -33,7 +33,16 @@ Route::patch('/replies/{replay}', 'ReplayController@update');
 
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 
+
 Route::post('/replies/{replay}/favorites', 'FavoritesController@store');
 Route::delete('/replies/{replay}/favorites', 'FavoritesController@destroy');
 
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')
+			->middleware('auth');
+Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destory')
+			->middleware('auth');
+			
+
+Route::delete('/profiles/{user}/notifications/{notification}', 'UsersNotificationsController@destroy');
+Route::get('/profiles/{user}/notifications', 'UsersNotificationsController@index');
 

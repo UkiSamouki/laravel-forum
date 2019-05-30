@@ -25,6 +25,7 @@ return array(
     'App\\Http\\Controllers\\ProfilesController' => $baseDir . '/app/Http/Controllers/ProfilesController.php',
     'App\\Http\\Controllers\\ReplayController' => $baseDir . '/app/Http/Controllers/ReplayController.php',
     'App\\Http\\Controllers\\ThreadController' => $baseDir . '/app/Http/Controllers/ThreadController.php',
+    'App\\Http\\Controllers\\ThreadSubscriptionsController' => $baseDir . '/app/Http/Controllers/ThreadSubscriptionsController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckForMaintenanceMode' => $baseDir . '/app/Http/Middleware/CheckForMaintenanceMode.php',

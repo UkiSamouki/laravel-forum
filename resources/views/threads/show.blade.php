@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
       <div class="col-md-8">
-            <div class="card" style="margin-bottom: 80px;">
+            <div class="card" style="margin-bottom: 80px; margin-top: 30px;">
                 <div class="card-body">
                   <div class="level">
                   <span class="flex">
@@ -36,16 +36,19 @@
          </div>
 
         <div class="col-md-4">
-          <div class="card" style="float: right;">
-                <div class="card-header"><h5>Info about Thread
-                </h5>
-              </div>
+          <div class="card" style="float: right; margin-top: 30px;">
 
                 <div class="card-body">
                      <div class="body">
                   <p>This thraed is published {{ $thread->created_at->diffForHumans() }} <br>by 
                         <a href="">{{ $thread->creator->name }}</a> and curently has 
                         <span v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}.
+                  </p>
+
+                  <p>
+                      
+                      <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+
                   </p>
                   </div>
                 </div>

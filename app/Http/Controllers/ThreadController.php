@@ -82,6 +82,7 @@ class ThreadController extends Controller
      */
     public function show($chanelid, Thread $thread)
     {
+
         //return $thread->replies;
         return view('threads.show', compact('thread'));
         
