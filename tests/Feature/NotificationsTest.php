@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Notifications\DatabaseNotification;
+
 
 
 class NotificationsTest extends TestCase
@@ -13,6 +15,15 @@ class NotificationsTest extends TestCase
 
 
     use DatabaseMigrations;
+
+    public function setUp() :void
+    {
+        
+        parent::setUp();
+
+        $this->signIn();  
+    }
+
     /**
      * A basic feature test example.
      *
@@ -22,7 +33,6 @@ class NotificationsTest extends TestCase
     {
         
 
-        $this->signIn();
 
         $thread = create('App\Thread')->subscribe();
 
@@ -56,13 +66,14 @@ class NotificationsTest extends TestCase
     public function a_user_can_fetch_their_unread_notifications()
     {
         
-        $this->signIn();
-        $thread = create('App\Thread')->subscribe();
+
+        create(DatabaseNotification::class);
+        /*$thread = create('App\Thread')->subscribe();
         $thread->addReplay([
 
             'user_id' => create('App\User')->id,
             'body' => 'Some reply here'
-        ]);
+        ]);*/
 
         $user = auth()->user();
 
@@ -80,13 +91,7 @@ class NotificationsTest extends TestCase
     public function a_user_can_mark_notifications_as_read()
     {
         
-        $this->signIn();
-        $thread = create('App\Thread')->subscribe();
-        $thread->addReplay([
-
-            'user_id' => create('App\User')->id,
-            'body' => 'Some reply here'
-        ]);
+        create(DatabaseNotification::class);
 
         $user = auth()->user();
         //user should have 1 notification

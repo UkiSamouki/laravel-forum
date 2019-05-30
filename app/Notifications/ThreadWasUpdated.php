@@ -61,7 +61,8 @@ class ThreadWasUpdated extends Notification
     {
         return [
             
-            'message' => 'Temporery placeholder.'
+            'message' => $this->replay->owner->name . ' replied to ' . $this->thread->title,
+            'link' => $this->replay->path()
         ];
     }
 }
