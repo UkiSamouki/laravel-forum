@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Filters\ThreadFilters;
 use App\RecordsActivity;
 use App\Notifications\ThreadWasUpdated;
+use App\Events\ThreadHasNewReplay;
 
 
 class Thread extends Model
@@ -41,6 +42,7 @@ class Thread extends Model
     {
     	return $this->hasMany(Replay::class);// if we want all favorites to fetch ->withCount('favorites')
     }
+
     public function getReplyCountAttribute()
     {
         return $this->replies()->count();// count all replies for thread
@@ -50,22 +52,28 @@ class Thread extends Model
     {
     	return $this->belongsTo(User::class, 'user_id');//jer gleda creator_id
     }
-
+  
     public function addReplay($replay)
     {
         $replay =  $this->replies()->create($replay);
 
-        // Prepare notifications for all subscribes.
-        $this->subscriptions
-            ->filter(function ($sub) use ($replay) {
-
-            return $sub->user_id != $replay->user_id;
-            
-            })
-            ->each->notify($replay);
+       $this->notifySubscribers($replay);
             
         return $replay;
 
+    }
+
+    public function notifySubscribers($replay)
+    {
+        
+        // Prepare notifications for all subscribes.
+        $this->subscriptions
+            
+            ->where('user_id', '!=' , $replay->user_id)
+
+            ->each
+            
+            ->notify($replay);
     }
 
     public function chanel()

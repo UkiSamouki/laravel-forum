@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ThreadWasUpdated;
 
 class ThreadTest extends TestCase
 {
@@ -64,6 +66,32 @@ class ThreadTest extends TestCase
     	]);
     	$this->assertCount(1, $this->thread->replies);
     }
+
+    /**
+     * A basic unit test example.
+     *
+     * @test 
+     */
+    public function a_thread_notifies_all_registered_subscribers_when_a_reply_is_added()
+    {
+
+        Notification::fake();
+
+        $this->signIn()
+
+       ->thread
+
+       ->subscribe()
+
+       ->addReplay([
+
+            'body' => 'Foobar',
+            'user_id' => 1
+        ]);
+
+        Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
+    }
+
     /**
      * A basic unit test example.
      *
