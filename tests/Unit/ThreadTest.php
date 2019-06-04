@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ThreadWasUpdated;
+use App\User;
 
 class ThreadTest extends TestCase
 {
@@ -137,6 +138,28 @@ class ThreadTest extends TestCase
 
         // Fetch all threads that user has subscribed
         $this->assertCount(0, $thread->subscriptions);
+    }
+
+    /**
+     * A basic unit test example.
+     *
+     * @test 
+     */
+
+    public function a_thread_check_if_authenticated_user_has_read_all_replies()
+    {
+        
+        $this->signIn();
+        $user = auth()->user();
+        $thread = create('App\Thread');
+        $this->assertTrue($thread->hasUpdatesFor(auth()->user()));
+
+       $user->read($thread);
+        
+        //you visited the thraed but it hasnt been updated so assertion is false
+
+        $this->assertFalse($thread->hasUpdatesFor(auth()->user()));
+
     }
 
 }

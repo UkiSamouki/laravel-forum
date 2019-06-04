@@ -6,7 +6,7 @@ use App\Thread;
 use App\Chanel;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
-
+use Carbon\Carbon;
 
 class ThreadController extends Controller
 {
@@ -83,6 +83,20 @@ class ThreadController extends Controller
     public function show($chanelid, Thread $thread)
     {
 
+        if (auth()->check()) {
+            
+            auth()->user()->read($thread);
+
+        }
+
+
+        //Record that user visited this page
+
+        //Record a timestamp
+
+        /*$key = sprintf("users.%s.visits.%s", auth()->id(), $thread->id);// users.50.visits.1
+
+        cache()->forever($key, Carbon::now());// we store a key to cache and make it equal to currnet time*/
         //return $thread->replies;
         return view('threads.show', compact('thread'));
         
