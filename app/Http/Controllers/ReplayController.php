@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Replay as Reply;
+use App\Inspections\Spam; 
+
 
 class ReplayController extends Controller
 {
@@ -19,9 +21,11 @@ class ReplayController extends Controller
         return $thread->replies()->paginate(10);
     }
 
-    public function store($chanelId ,Thread $thread){
+    public function store($chanelId ,Thread $thread, Spam $spam){
 
         $this->validate(request(), ['body' => 'required']);
+
+        $spam->detect(request('body'));
 
     	$replay = $thread->addReplay([
     		'body' => request('body'),

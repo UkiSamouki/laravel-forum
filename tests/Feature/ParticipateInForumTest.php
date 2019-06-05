@@ -139,5 +139,26 @@ class ParticipateInForumTest extends TestCase
             $this->patch("/replies/{$replay->id}", ["body" => $updatedReplay]);
 
             $this->assertDatabaseHas('replays', ['id' => $replay->id, "body" => $updatedReplay]);
-        }           
+        }
+
+        /**
+     * A basic feature test example.
+     *
+     * @test
+     */
+
+    public function replies_that_contain_spam_may_not_be_created()
+     {
+        
+
+        $this->signIn();
+        //And an existing thread
+        $thread = factory('App\Thread')->create();
+        //When user adds replay to thread
+        $replay = make('App\Replay', [ 'body' => 'Yahoo Customer Support']);// we want to make in memory not create on db
+        
+        $this->expectException(\Exception::class);
+
+        $this->post($thread->path().'/replies' ,$replay->toArray());                
+     }           
 }
