@@ -6,7 +6,10 @@ You should provide your own .env file and run commands
 
 composer install and npm install to install necessary dependency.
  
- And npm run watch to compile.
+Next run our migrations with command (before this command create db for this project)
+
+php artisan migrate; this will create necessary tables for project
+
  
  
  Next because i did TDD you will  need to provide your own test database (my testing_forum) mysql is my driver.
@@ -49,6 +52,12 @@ factory('App\Thread', 50)->create(); to create a 50 threads
 
 factory('App'Replay', 30)->create(['thread_id' => App\Thread::latest()->first()->id]);  to create 30 reply for latest thread 
 
+
+
+
+And npm run watch to compile.
+
+And php artisan serve to start serve app.
 
 
 Project and documentation isn't done yet this is only to start app and have some basic UI.
